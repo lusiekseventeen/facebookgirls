@@ -1,0 +1,80 @@
+#:import random random.random
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import SwapTransition kivy.uix.screenmanager.SwapTransition
+#:import WipeTransition kivy.uix.screenmanager.WipeTransition
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+#:import FallOutTransition kivy.uix.screenmanager.FallOutTransition
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import BoxLayout kivy.uix.boxlayout
+
+<LusiekButton@Button>
+    font_size: 32
+    size: 150,50
+    color: 0, 0, 0, 1
+    background_color: .88, .88, .88, 1
+    size_hint: None, None
+
+<LusiekNavLabel@Label>
+    font_size: 22
+    color: 1, 1, 1, 1
+    size: 200,50
+    background_color: .88, .88, .88, 1
+    size_hint: .1, .05
+    size_hint: None, None
+
+<LusiekTextInput@TextInput>
+    font_size: 32
+    size:  350, 50
+    color: 1, 1, 1, 1
+    size_hint: None, None
+    background_color: .88, .88, .88, 1
+
+<ScreenLogin>:
+    BoxLayout:
+        orientation: "vertical"
+        id: "panel_login"
+        size_hint: .4, .5
+        size_hint_max: .4, .5
+        spacing: 30
+        pos_hint: {"center_x": .5, "center_y": .5}
+
+        BoxLayout:
+            size: 200, 200
+            size_hint: None, None
+            pos_hint: {"center_x": .5, "center_y": .5}
+            canvas.before:
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: "assets/logo.png"
+
+        BoxLayout:
+            orientation: "vertical"
+            id: "panel_login"
+            spacing: 5
+            pos_hint: {"center_x": .5, "center_y": .5}
+
+            LusiekTextInput:
+                id: "in_login"
+                pos_hint: {"center_x": .5, "center_y": .5}
+                color: 1, 1, 1, 1,
+            LusiekTextInput:
+                id: "in_pass"
+                pos_hint: {"center_x": .5, "center_y": .5}
+                password: True
+
+        LusiekButton:
+            id: "button_login"
+            text: "log in"
+            pos_hint: {"center_x": .5,"center_y": .5}
+            on_press:
+                root.manager.transition = WipeTransition()
+                root.manager.transition.duration = 1
+                root.manager.current = 'screen_main_mid'
+
+        LusiekNavLabel:
+            id: "navlabel_singup"
+            text: "no account? grab one!"
+            pos_hint: {"center_x": .5}
+

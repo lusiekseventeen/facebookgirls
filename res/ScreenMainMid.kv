@@ -1,0 +1,79 @@
+<LusiekNavButton@Button>
+    size: 100,100
+    size_hint: None, None
+
+<LusiekDecideButton@Button>
+    size: 150,150
+    size_hint: None, None
+
+<ScreenMainMid>:
+    RelativeLayout:
+        LusiekNavButton:
+            id: "btn_nav_to_settings"
+            pos: 0, root.height-self.height
+            background_down: "assets/settings.png"
+            background_normal: "assets/settings_pressed.png"
+            on_press:
+                # You can define the duration of the change
+                # and the direction of the slide
+                root.manager.transition = SlideTransition()
+                root.manager.transition.direction = 'right'
+                root.manager.transition.duration = 1
+                root.manager.current = 'screen_setting_left'
+        LusiekNavButton:
+            id: "btn_nav_to_matches"
+            pos: root.width-self.width, root.height-self.height
+            background_down: "assets/matches.png"
+            background_normal: "assets/matches_pressed.png"
+            on_press:
+                # You can define the duration of the change
+                # and the direction of the slide
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 1
+                root.manager.current = 'screen_matches_right'
+
+        BoxLayout:
+            orientation: "vertical"
+            id: "panel_login"
+            size_hint: .4, .5
+            size_hint_max: .4, .5
+            spacing: 30
+            pos_hint: {"center_x": .5, "center_y": .5}
+
+            BoxLayout:
+                size: 600, 600
+                size_hint: None, None
+                pos_hint: {"center_x": .5, "center_y": .5}
+                canvas.before:
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                        source: "assets/logo.png"
+
+            BoxLayout:
+                orientation: "horizontal"
+                id: "decide_panel"
+                size: 300, 200
+                size_hint: None, None
+                spacing: 5
+                pos_hint: {"center_x": .5, "center_y": .5}
+
+                LusiekDecideButton:
+                    id: "btn_decide_no"
+                    background_down: "assets/no_pressed.png"
+                    background_normal: "assets/no.png"
+                    on_press:
+                        root.manager.transition = WipeTransition()
+                        root.manager.transition.duration = 1
+                        root.manager.current = 'screen_main_mid'
+
+
+                LusiekDecideButton:
+                    id: "btn_decide_yes"
+                    background_down: "assets/yes_pressed.png"
+                    background_normal: "assets/yes.png"
+                    on_press:
+                        root.manager.transition = WipeTransition()
+                        root.manager.transition.duration = 1
+                        root.manager.current = 'screen_main_mid'
+
