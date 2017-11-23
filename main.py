@@ -36,10 +36,7 @@ class ScreenMainMid(Screen):
 
     def loadPicture(self):
         self.img_path = StringProperty("assets/myfriends/test.jpg")
-        #self.remove_widget(self.ids.img)
-        #img = Image(source='assets/myfriends/test.jpg', id='img', size='self.size', pos='self.pos')
-        #self.ids.image_holder_girls.source = "assets/myfriends/test.jpg"
-        #self.ids.image_holder_girls.source = self.next_photo()
+
 
 
 class ScreenSettingLeft(Screen):
