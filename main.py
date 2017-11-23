@@ -17,7 +17,8 @@ Builder.load_file("res/ScreenMatchesRight.kv")
 # Create a class for all screens in which you can include
 # helpful methods specific to that screen
 class ScreenLogin(Screen):
-    pass
+    def login(self):
+        logFunc.logFunc("")
 
 
 class ScreenMainMid(Screen):
@@ -30,8 +31,10 @@ class ScreenMainMid(Screen):
         self.current_photo += 1
         return self.photo_path + str(self.current_photo) + ".jpg"
 
+
 class ScreenSettingLeft(Screen):
     pass
+
 
 class ScreenMatchesRight(Screen):
     pass
@@ -51,7 +54,6 @@ screen_manager.add_widget(ScreenMatchesRight(name="screen_matches_right"))
 class FacebookGirlsApp(App):
 
     def build(self):
-        logFunc.logFunc("")
         return screen_manager
 
 
