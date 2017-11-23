@@ -1,11 +1,13 @@
 import kivy
-import logFunc
+#import logFunc
 
 kivy.require('1.9.1')
 
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.image import Image
+from kivy.properties import StringProperty
 
 # You can create your kv code in the Python file
 Builder.load_file("res/ScreenLogin.kv")
@@ -21,17 +23,22 @@ class ScreenLogin(Screen):
 
 
 class ScreenMainMid(Screen):
-    def __init__(self):
-        # Constant part of image path
-        self.photo_path = ""
-        self.current_photo = 0
+
+    img_path = ""
+
+    def __init__(self, **kwargs):
+        super(ScreenMainMid, self).__init__(**kwargs)
+        self.img_source = "assets/logo.png"
 
     def next_photo(self):
-        self.current_photo += 1
+        self.current_photo = 0
         return self.photo_path + str(self.current_photo) + ".jpg"
 
     def loadPicture(self):
-        self.ids.image_holder_girls.source = "test.jpg"
+        self.img_path = StringProperty("assets/myfriends/test.jpg")
+        #self.remove_widget(self.ids.img)
+        #img = Image(source='assets/myfriends/test.jpg', id='img', size='self.size', pos='self.pos')
+        #self.ids.image_holder_girls.source = "assets/myfriends/test.jpg"
         #self.ids.image_holder_girls.source = self.next_photo()
 
 
@@ -42,11 +49,10 @@ class ScreenMatchesRight(Screen):
     pass
 
 
-# The ScreenManager controls moving between screens
+
 screen_manager = ScreenManager()
 
-# Add the screens to the manager and then supply a name
-# that is used to switch screens
+
 screen_manager.add_widget(ScreenLogin(name="screen_login"))
 screen_manager.add_widget(ScreenMainMid(name="screen_main_mid"))
 screen_manager.add_widget(ScreenSettingLeft(name="screen_setting_left"))
@@ -56,8 +62,9 @@ screen_manager.add_widget(ScreenMatchesRight(name="screen_matches_right"))
 class FacebookGirlsApp(App):
 
     def build(self):
-        logFunc.logFunc("")
         return screen_manager
+
+    screen_manager.current = "screen_login"
 
 
 fbg_app = FacebookGirlsApp()
