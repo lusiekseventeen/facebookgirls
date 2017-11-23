@@ -21,7 +21,14 @@ class ScreenLogin(Screen):
 
 
 class ScreenMainMid(Screen):
-    pass
+    def __init__(self):
+        # Constant part of image path
+        self.photo_path = ""
+        self.current_photo = 0
+
+    def next_photo(self):
+        self.current_photo += 1
+        return self.photo_path + str(self.current_photo) + ".jpg"
 
 class ScreenSettingLeft(Screen):
     pass
