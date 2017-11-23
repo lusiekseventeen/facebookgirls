@@ -1,4 +1,5 @@
 import kivy
+import logFunc
 
 kivy.require('1.9.1')
 
@@ -7,10 +8,10 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 # You can create your kv code in the Python file
-Builder.load_file("Res/ScreenLogin.kv")
-Builder.load_file("Res/ScreenMainMid.kv")
-Builder.load_file("Res/ScreenSettingLeft.kv")
-Builder.load_file("Res/ScreenMatchesRight.kv")
+Builder.load_file("res/ScreenLogin.kv")
+Builder.load_file("res/ScreenMainMid.kv")
+Builder.load_file("res/ScreenSettingLeft.kv")
+Builder.load_file("res/ScreenMatchesRight.kv")
 
 
 # Create a class for all screens in which you can include
@@ -41,7 +42,9 @@ screen_manager.add_widget(ScreenMatchesRight(name="screen_matches_right"))
 
 
 class FacebookGirlsApp(App):
+
     def build(self):
+        logFunc.logFunc("")
         return screen_manager
 
 

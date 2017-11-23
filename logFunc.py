@@ -2,10 +2,9 @@ import facebook
 import urllib
 import os
 
-def logFunc(username, password, directory):
-    #TODO Wyłuskać Access token z hasła i użytkownika.
-    graph = facebook.GraphAPI("<Access Token from Developers page>")
-    likes = graph.get_connections("<node id>", "likes?fields=link,name&limit=5000")
+def logFunc(directory, username="", password="",):
+    graph = facebook.GraphAPI("EAACEdEose0cBAIkEnFiZAFVKdQSqkiLlT9jZC6p8k870TQwXCZAFNe4hfyK3yifdfOpBFUSLRMqBBRV19vIihRDRMgZA32eelZBZCACn8X4CveFvKBSd8QP1D3mK1O2ZCxXL85cJXZC3s1P4EPp0jdadbzqZBUjUAEVmUGBeKT5eYPfJ9LVadFyH2XOxAvLHEHa2M6CfiKKp6kEH5ksXoASi8")
+    likes = graph.get_connections("2030671310550069", "likes?fields=link,name&limit=5000")
     for i in range(0, len(likes["data"])):
         nodeid = likes["data"][i]["id"]
         nodename = likes["data"][i]["name"]
