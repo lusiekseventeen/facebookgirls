@@ -37,20 +37,21 @@ class ScreenLogin(Screen):
 
 class ScreenMainMid(Screen):
 
-    img_path = ""
+    img_path = "assets/myfriends/0.jpg"
 
     def __init__(self, **kwargs):
         super(ScreenMainMid, self).__init__(**kwargs)
-        self.img_source = "assets/logo.png"
+        self.photo_path = "assets/myfriends/"
+        self.current_photo = 0
 
     def next_photo(self):
-        self.current_photo = 0
+        self.current_photo += 1
         return self.img_path + str(self.current_photo) + ".jpg"
 
     def loadPicture(self):
-        self.img_path = StringProperty("assets/myfriends/test.jpg")
-
-
+        self.ids.img.source = self.next_photo()
+        self.ids.img.reload()
+        self.do_layout()
 
 class ScreenSettingLeft(Screen):
     pass
