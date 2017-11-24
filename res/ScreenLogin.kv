@@ -33,7 +33,7 @@
 <ScreenLogin>:
     BoxLayout:
         orientation: "vertical"
-        id: "panel_login"
+        id: panel_login
         size_hint: .4, .5
         size_hint_max: .4, .5
         spacing: 30
@@ -56,23 +56,23 @@
             pos_hint: {"center_x": .5, "center_y": .5}
 
             LusiekTextInput:
-                id: "in_login"
+                id: in_login
                 pos_hint: {"center_x": .5, "center_y": .5}
                 color: 1, 1, 1, 1,
             LusiekTextInput:
-                id: "in_pass"
+                id: in_pass
                 pos_hint: {"center_x": .5, "center_y": .5}
                 password: True
 
         LusiekButton:
-            id: "button_login"
+            id: button_login
             text: "log in"
             pos_hint: {"center_x": .5,"center_y": .5}
             on_press:
                 root.verify()
 
         LusiekNavLabel:
-            id: "navlabel_singup"
+            id: navlabel_singup
             text: "no account? grab one!"
             pos_hint: {"center_x": .5}
 
