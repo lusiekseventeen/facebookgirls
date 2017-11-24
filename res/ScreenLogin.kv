@@ -69,9 +69,7 @@
             text: "log in"
             pos_hint: {"center_x": .5,"center_y": .5}
             on_press:
-                root.manager.transition = WipeTransition()
-                root.manager.transition.duration = 1
-                root.manager.current = 'screen_main_mid'
+                root.verify()
 
         LusiekNavLabel:
             id: "navlabel_singup"

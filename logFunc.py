@@ -1,10 +1,20 @@
 import facebook
+import requests
 import urllib
 import os
 
-def logFunc(directory, username="", password="",):
-    graph = facebook.GraphAPI("EAACEdEose0cBAIkEnFiZAFVKdQSqkiLlT9jZC6p8k870TQwXCZAFNe4hfyK3yifdfOpBFUSLRMqBBRV19vIihRDRMgZA32eelZBZCACn8X4CveFvKBSd8QP1D3mK1O2ZCxXL85cJXZC3s1P4EPp0jdadbzqZBUjUAEVmUGBeKT5eYPfJ9LVadFyH2XOxAvLHEHa2M6CfiKKp6kEH5ksXoASi8")
-    likes = graph.get_connections("2030671310550069", "likes?fields=link,name&limit=5000")
+
+def get_fb_token(app_id, app_secret):
+    payload = {'grant_type': 'client_credentials', 'client_id': app_id, 'client_secret': app_secret}
+    file = requests.post('https://graph.facebook.com/oauth/access_token?', params=payload)
+    result = file.text.split("=")[1]
+    return result
+
+def logFunc(directory="", username="", password="",):
+    #Authentication
+    token = get_fb_token("319393311801821", "90c63fc2e6a9ecb5dde0a4e861499f6f")
+    graph = facebook.GraphAPI(token)
+    likes = graph.get_connections("319393311801821", "likes?fields=link,name&limit=5000")
     number = 0
     for i in range(0, len(likes["data"])):
         number += 1
@@ -19,3 +29,4 @@ def logFunc(directory, username="", password="",):
             continue
         pic = graph.get_connections(username, "picture?height=9000&redirect=false")
         urllib.request.urlretrieve(pic["data"]["url"], "directory" + number + ".jpg")
+    return True
