@@ -9,23 +9,23 @@
 #:import BoxLayout kivy.uix.boxlayout
 
 <LusiekButton@Button>
-    font_size: 32
-    size: 150,50
+    font_size: 16
+    size: 75,25
     color: 0, 0, 0, 1
     background_color: .88, .88, .88, 1
     size_hint: None, None
 
 <LusiekNavLabel@Label>
-    font_size: 22
+    font_size: 11
     color: 1, 1, 1, 1
-    size: 200,50
+    size: 100,25
     background_color: .88, .88, .88, 1
     size_hint: .1, .05
     size_hint: None, None
 
 <LusiekTextInput@TextInput>
-    font_size: 32
-    size:  350, 50
+    font_size: 16
+    size:  175, 25
     color: 1, 1, 1, 1
     size_hint: None, None
     background_color: .88, .88, .88, 1
@@ -36,11 +36,11 @@
         id: panel_login
         size_hint: .4, .5
         size_hint_max: .4, .5
-        spacing: 30
+        spacing: 15
         pos_hint: {"center_x": .5, "center_y": .5}
 
         BoxLayout:
-            size: 200, 200
+            size: 100, 100
             size_hint: None, None
             pos_hint: {"center_x": .5, "center_y": .5}
             canvas.before:
