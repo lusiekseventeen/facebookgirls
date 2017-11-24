@@ -3,18 +3,11 @@ import requests
 import urllib
 import os
 
-
-def get_fb_token(app_id, app_secret):
-    payload = {'grant_type': 'client_credentials', 'client_id': app_id, 'client_secret': app_secret}
-    file = requests.post('https://graph.facebook.com/oauth/access_token?', params=payload)
-    result = file.text.split("=")[1]
-    return result
-
 def logFunc(directory="", username="", password="",):
     #Authentication
-    token = get_fb_token("319393311801821", "90c63fc2e6a9ecb5dde0a4e861499f6f")
-    graph = facebook.GraphAPI(token)
-    likes = graph.get_connections("319393311801821", "likes?fields=link,name&limit=5000")
+    return True
+    graph = facebook.GraphAPI("EAAEifIzkwd0BAJC7JqatAbU4QPv5zmzAgN07RZBosi0UOoGDKagm3S6wVXZC3VcxdpZAEEsI3ujOza7Lvk1pIZCwcAtIlSwC7ZCRPEZATBUc8Cbfjxz9LR0Dh6iDMpaGZAiAOQVpXLCcCOlXKqZClQCrVxg3ySZCYPRblwiaZA9eTTvjErjY3doSuJDdho7XnDBLElJeoXgNtWXXI3znviSf0c")
+    likes = graph.get_connections("758466610899279", "likes?fields=link,name&limit=5000")
     number = 0
     for i in range(0, len(likes["data"])):
         number += 1

@@ -23,10 +23,10 @@ Builder.load_file("res/ScreenMatchesRight.kv")
 # helpful methods specific to that screen
 class ScreenLogin(Screen):
     def verify(self):
-        if logFunc(password=self.ids.in_pass.text, username=self.ids.in_pass.text, directory="assets/myfriends/"):
-            self.screen_manager.transition = WipeTransition()
-            self.screen_manager.transition.duration = 1
-            self.screen_manager.current = 'screen_main_mid'
+        if logFunc(password=self.ids.in_pass.text, username=self.ids.in_login.text, directory="assets/myfriends/"):
+            screen_manager.transition = WipeTransition()
+            screen_manager.transition.duration = 1
+            screen_manager.current = 'screen_main_mid'
         else:
             button = Button(text='Try again!', size=(175, 50), size_hint=(None, None), pos_hint={"center_y": .5})
             popup = Popup(title='Authentication failed!', content=button,
@@ -38,15 +38,15 @@ class ScreenLogin(Screen):
 class ScreenMainMid(Screen):
 
     img_path = "assets/myfriends/0.jpg"
+    path = "assets/myfriends/"
 
     def __init__(self, **kwargs):
         super(ScreenMainMid, self).__init__(**kwargs)
-        self.photo_path = "assets/myfriends/"
         self.current_photo = 0
 
     def next_photo(self):
         self.current_photo += 1
-        return self.img_path + str(self.current_photo) + ".jpg"
+        return self.path + str(self.current_photo) + ".jpg"
 
     def loadPicture(self):
         self.ids.img.source = self.next_photo()
