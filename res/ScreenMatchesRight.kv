@@ -1,3 +1,9 @@
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#:kivy 1.0
+#:import kivy kivy
+#:import win kivy.core.window
+
 <LusiekNavButton@Button>
     font_size: 32
     size: 100,100
@@ -10,8 +16,28 @@
             background_down: "assets/right_pressed.png"
             background_normal: "assets/right.png"
             on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
+                root.manager.transition = SlideTransition()
                 root.manager.transition.direction = 'right'
                 root.manager.transition.duration = 1
                 root.manager.current = 'screen_main_mid'
+<Picture>:
+    on_size: self.center = win.Window.center
+    size: image.size
+    size_hint: None, None
+    pos: 200, 200
+
+    Image:
+        id: image
+        source: root.source
+        size: 400, 400 / self.image_ratio
+        canvas.before:
+            Color:
+                rgba: 1,1,1,1
+            BorderImage:
+                source: 'assets/shadow32.png'
+                border: (30,30,30,30)
+                size:(self.width+72, self.height+72)
+                pos: (-36,-36)
+
+
+

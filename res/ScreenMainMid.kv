@@ -26,6 +26,7 @@
             on_press:
                 # You can define the duration of the change
                 # and the direction of the slide
+                root.manager.transition = SlideTransition()
                 root.manager.transition.direction = 'left'
                 root.manager.transition.duration = 1
                 root.manager.current = 'screen_matches_right'

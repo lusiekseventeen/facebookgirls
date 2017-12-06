@@ -10,7 +10,14 @@ from kivy.uix.image import Image
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import WipeTransition
 from kivy.uix.listview import ListItemButton
-
+from glob import glob
+from random import randint
+from os.path import join, dirname
+from kivy.app import App
+from kivy.logger import Logger
+from kivy.uix.scatter import Scatter
+from kivy.properties import StringProperty
+from kivy.core.text import LabelBase
 
 
 kivy.require('1.9.1')
@@ -27,6 +34,8 @@ class MatchItem(BoxLayout):
         super(ScreenMainMid, self).__init__(**kwargs)
         self.current_photo = 0
 
+class Picture(Scatter):
+    source = StringProperty(None)
 
 
 class ScreenLogin(Screen):
@@ -34,7 +43,7 @@ class ScreenLogin(Screen):
         if logFunc(password=self.ids.in_pass.text, username=self.ids.in_login.text, directory="assets/myfriends/"):
             screen_manager.transition = WipeTransition()
             screen_manager.transition.duration = 1
-            screen_manager.current = 'screen_main_mid'
+            screen_manager.current = "screen_main_mid"
         else:
             button = Button(text='Try again!', size=(175, 50), size_hint=(None, None), pos_hint={"center_y": .5})
             popup = Popup(title='Authentication failed!', content=button,
@@ -77,7 +86,25 @@ class ScreenSettingLeft(Screen):
     pass
 
 class ScreenMatchesRight(Screen):
-    pass
+
+    def __init__(self, **kwargs):
+        super(ScreenMatchesRight, self).__init__(**kwargs)
+        self.current_photo = 0
+        self.putPictures()
+
+    def putPictures(self):
+        curdir = dirname(__file__)
+        screen_manager.transition = WipeTransition()
+        screen_manager.transition.duration = 1
+        screen_manager.current = "screen_login"
+        for filename in glob(join(curdir, 'assets/myfriends', '*')):
+            try:
+                # load the image
+                picture = Picture(source=filename, rotation=randint(-30, 30))
+                # add to the main field
+                self.add_widget(picture)
+            except Exception as e:
+                Logger.exception('Pictures: Unable to load <%s>' % filename)
 
 class Girl():
     id = 0
@@ -101,13 +128,14 @@ matches.append(test_girl)
 
 screen_manager = ScreenManager()
 
-
+#Menadzer ekranow
 screen_manager.add_widget(ScreenLogin(name="screen_login"))
 screen_manager.add_widget(ScreenMainMid(name="screen_main_mid"))
 screen_manager.add_widget(ScreenSettingLeft(name="screen_setting_left"))
 screen_manager.add_widget(ScreenMatchesRight(name="screen_matches_right"))
 
-
+#Czcionka
+LabelBase.register(name="klavika", fn_regular="assets/fonts/klavika.otf")
 
 
 class FacebookGirlsApp(App):
