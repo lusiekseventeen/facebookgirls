@@ -1,17 +1,15 @@
-<LusiekNavButton@Button>
-    font_size: 32
-    size: 100,100
-    size_hint: None, None
 <ScreenSettingLeft>:
     RelativeLayout:
         LusiekNavButton:
             id: "btn_nav_to_matches"
+            size: 50,50
             pos: root.width-self.width, root.height-self.height
-            background_down: "assets/left_pressed.png"
-            background_normal: "assets/left.png"
             on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
+                root.manager.transition.duration = .5
                 root.manager.current = 'screen_main_mid'
+            Image:
+                source: 'assets/left.png'
+                pos: root.width-self.width, root.height-self.height
+                size: self.parent.width, self.parent.height
+                allow_stretch: True

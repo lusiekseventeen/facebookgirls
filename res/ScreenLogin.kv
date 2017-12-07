@@ -76,8 +76,10 @@
             text: "log in"
             font_name: "klavika"
             pos_hint: {"center_x": .5,"center_y": .5}
-            on_press:
+            on_release:
                 root.verify()
+            on_press:
+                root.animate(self)
 
         LusiekNavLabel:
             id: navlabel_singup

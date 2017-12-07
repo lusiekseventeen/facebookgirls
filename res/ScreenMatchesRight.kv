@@ -4,40 +4,62 @@
 #:import kivy kivy
 #:import win kivy.core.window
 
-<LusiekNavButton@Button>
-    font_size: 32
-    size: 100,100
-    size_hint: None, None
 <ScreenMatchesRight>:
+    images_holder: images
     RelativeLayout:
+        Image:
+            source: 'assets/background_right.png'
+            pos: root.width-self.width-5, root.height-self.height - 10
+            size: self.parent.width, self.parent.height
+            allow_stretch: True
         LusiekNavButton:
             id: "btn_nav_to_matches"
+            size: 50,50
             pos: 0, root.height-self.height
-            background_down: "assets/right_pressed.png"
-            background_normal: "assets/right.png"
             on_press:
-                root.manager.transition = SlideTransition()
-                root.manager.transition.direction = 'right'
-                root.manager.transition.duration = 1
-                root.manager.current = 'screen_main_mid'
+                root.alignAll()
+                #root.manager.transition = SlideTransition()
+                #root.manager.transition.direction = 'right'
+                #root.manager.transition.duration = .5
+                #root.manager.current = 'screen_main_mid'
+            Image:
+                source: 'assets/right.png'
+                pos: 0, root.height-self.height
+                size: self.parent.width, self.parent.height
+                allow_stretch: True
+        LusiekNavButton:
+            id: btn_align
+            size: 50,50
+            pos: root.width-self.width-10, 10
+            on_press:
+                root.alignAll()
+                root.animate(self)
+            Image:
+                source: 'assets/align.png'
+                pos: root.width-self.width-10, 10
+                size: self.parent.width, self.parent.height
+                allow_stretch: True
+        RelativeLayout:
+            id: images
 <Picture>:
     on_size: self.center = win.Window.center
-    size: image.size
+    size: 200, 200 / image.image_ratio
     size_hint: None, None
     pos: 200, 200
+    img: image
 
     Image:
         id: image
         source: root.source
-        size: 400, 400 / self.image_ratio
+        size: self.parent.width, self.parent.height
         canvas.before:
             Color:
                 rgba: 1,1,1,1
             BorderImage:
                 source: 'assets/shadow32.png'
-                border: (30,30,30,30)
-                size:(self.width+72, self.height+72)
-                pos: (-36,-36)
+                border: (15,15,15,15)
+                size:(self.width+36, self.height+36)
+                pos: (-18,-18)
 
 
 

@@ -3,6 +3,7 @@ from logFunc import logFunc
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
+from kivy.uix.widget import Widget
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -18,6 +19,8 @@ from kivy.logger import Logger
 from kivy.uix.scatter import Scatter
 from kivy.properties import StringProperty
 from kivy.core.text import LabelBase
+from kivy.animation import Animation
+from kivy.properties import ObjectProperty
 
 
 kivy.require('1.9.1')
@@ -55,6 +58,11 @@ class ScreenLogin(Screen):
             screen_manager.current = 'screen_main_mid'
 
 
+    def animate(self, instance):
+        animation = Animation(size=(instance.width + 5, instance.height + 5), duration=0.1)
+        animation += Animation(size=(instance.width, instance.height), duration=0.1)
+        animation.start(instance)
+
 class ScreenMainMid(Screen):
 
     img_path = "assets/myfriends/0.jpg"
@@ -78,6 +86,11 @@ class ScreenMainMid(Screen):
         self.ids.img.reload()
         self.do_layout()
 
+    def animate(self, instance):
+        animation = Animation(size=(instance.width+5, instance.height+5), duration=0.1)
+        animation += Animation(size=(instance.width, instance.height), duration=0.1)
+        animation.start(instance)
+
     #TODO: nastepna dziewucha zamiast nastepnego zdjecia.
     #def nextGirl(self):
         #current_girl =
@@ -86,6 +99,8 @@ class ScreenSettingLeft(Screen):
     pass
 
 class ScreenMatchesRight(Screen):
+
+    images_holder = ObjectProperty()
 
     def __init__(self, **kwargs):
         super(ScreenMatchesRight, self).__init__(**kwargs)
@@ -99,12 +114,22 @@ class ScreenMatchesRight(Screen):
         screen_manager.current = "screen_login"
         for filename in glob(join(curdir, 'assets/myfriends', '*')):
             try:
-                # load the image
                 picture = Picture(source=filename, rotation=randint(-30, 30))
-                # add to the main field
-                self.add_widget(picture)
+                self.images_holder.add_widget(picture)
             except Exception as e:
                 Logger.exception('Pictures: Unable to load <%s>' % filename)
+    def alignAll(self):
+        #photo
+        for child in self.images_holder.children:
+            animation = Animation(rotation=child.rotation + randint(-30,30), duration=0.2)
+            animation &= Animation(pos=(200, 200), scale=1, t='out_circ', duration=0.3)
+            animation.start(child)
+
+    def animate(self, instance):
+        animation = Animation(size=(instance.width+5, instance.height+5), duration=0.1)
+        animation += Animation(size=(instance.width, instance.height), duration=0.1)
+        animation.start(instance)
+
 
 class Girl():
     id = 0

@@ -9,27 +9,32 @@
 <ScreenMainMid>:
     RelativeLayout:
         LusiekNavButton:
-            id: "btn_nav_to_settings"
-            pos: 0, root.height-self.height
-            background_down: "assets/settings.png"
-            background_normal: "assets/settings_pressed.png"
+            id: btn_nav_to_settings
+            pos: 5, root.height-self.height - 10
             on_press:
                 root.manager.transition = SlideTransition()
                 root.manager.transition.direction = 'right'
-                root.manager.transition.duration = 1
+                root.manager.transition.duration = .5
                 root.manager.current = 'screen_setting_left'
+            Image:
+                source: 'assets/settings.png'
+                pos: 5, root.height-self.height - 10
+                size: self.parent.width, self.parent.height
+                allow_stretch: True
+
         LusiekNavButton:
-            id: "btn_nav_to_matches"
-            pos: root.width-self.width, root.height-self.height
-            background_down: "assets/matches.png"
-            background_normal: "assets/matches_pressed.png"
+            id: btn_nav_to_matches
+            pos: root.width-self.width-5, root.height-self.height - 10
             on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
                 root.manager.transition = SlideTransition()
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
+                root.manager.transition.duration = .5
                 root.manager.current = 'screen_matches_right'
+            Image:
+                source: 'assets/matches.png'
+                pos: root.width-self.width-5, root.height-self.height - 10
+                size: self.parent.width, self.parent.height
+                allow_stretch: True
 
         BoxLayout:
             orientation: "vertical"
@@ -61,6 +66,8 @@
                     id: "btn_decide_no"
                     background_down: "assets/no_pressed.png"
                     background_normal: "assets/no.png"
+                    on_press:
+                        root.animate(self)
                     on_release:
                         root.loadPicture()
 
@@ -69,6 +76,8 @@
                     id: "btn_decide_yes"
                     background_down: "assets/yes_pressed.png"
                     background_normal: "assets/yes.png"
+                    on_press:
+                        root.animate(self)
                     on_press:
                         root.loadPicture()
 
