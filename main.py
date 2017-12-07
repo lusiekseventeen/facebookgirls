@@ -56,7 +56,7 @@ class ScreenLogin(Screen):
             screen_manager.transition = WipeTransition()
             screen_manager.transition.duration = 1
             screen_manager.current = 'screen_main_mid'
-
+        
 
     def animate(self, instance):
         animation = Animation(size=(instance.width + 5, instance.height + 5), duration=0.1)
@@ -66,6 +66,12 @@ class ScreenLogin(Screen):
 class ScreenMainMid(Screen):
 
     img_path = "assets/myfriends/0.jpg"
+
+    yes_path = "assets/yes.png"
+    no_path = "assets/no.png"
+    yes_path_prompt = "assets/yes_pressed.png"
+    no_path_prompt = "assets/no_pressed.png"
+
     path = "assets/myfriends/"
 
     def __init__(self, **kwargs):
@@ -90,6 +96,26 @@ class ScreenMainMid(Screen):
         animation = Animation(size=(instance.width+5, instance.height+5), duration=0.1)
         animation += Animation(size=(instance.width, instance.height), duration=0.1)
         animation.start(instance)
+
+    #Podpowiedz na TAK
+    def putYesPrompt(self):
+        self.ids.btn_decide_yes.source = self.yes_path_prompt
+        self.ids.btn_decide_yes.reload()
+        self.do_layout()
+
+    # Podpowiedz na NIE
+    def putNoPrompt(self):
+        self.ids.btn_decide_no.source = self.no_path_prompt
+        self.ids.btn_decide_no.reload()
+        self.do_layout()
+
+    #Reset podpowiedzi
+    def resetPrompt(self):
+        self.ids.btn_decide_no.source = self.no_path
+        self.ids.btn_decide_no.reload()
+        self.ids.btn_decide_yes.source = self.yes_path
+        self.ids.btn_decide_yes.reload()
+        self.do_layout()
 
     #TODO: nastepna dziewucha zamiast nastepnego zdjecia.
     #def nextGirl(self):

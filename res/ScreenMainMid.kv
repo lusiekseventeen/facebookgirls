@@ -3,7 +3,7 @@
     size_hint: None, None
 
 <LusiekDecideButton@Button>
-    size: 75,75
+    size: 50,50
     size_hint: None, None
 
 <ScreenMainMid>:
@@ -63,21 +63,27 @@
                 pos_hint: {"center_x": .5, "center_y": .5}
 
                 LusiekDecideButton:
-                    id: "btn_decide_no"
-                    background_down: "assets/no_pressed.png"
-                    background_normal: "assets/no.png"
                     on_press:
                         root.animate(self)
                     on_release:
                         root.loadPicture()
+                    Image:
+                        id: btn_decide_no
+                        source: "assets/no.png"
+                        pos: self.parent.pos
+                        size: self.parent.width, self.parent.height
+                        allow_stretch: True
 
 
                 LusiekDecideButton:
-                    id: "btn_decide_yes"
-                    background_down: "assets/yes_pressed.png"
-                    background_normal: "assets/yes.png"
                     on_press:
                         root.animate(self)
                     on_press:
                         root.loadPicture()
+                    Image:
+                        id: btn_decide_yes
+                        source: "assets/yes.png"
+                        pos: self.parent.x, self.parent.y
+                        size: self.parent.width, self.parent.height
+                        allow_stretch: True
 
