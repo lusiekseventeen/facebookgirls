@@ -34,8 +34,11 @@ def login(session, email, password, array):
         file = requests.post('https://graph.facebook.com/oauth/access_token?', params=payload)
         token = file.json()['access_token']
         graph = facebook.GraphAPI(token)
-        friends = graph.get_connections(user_id, "friends")
+        p = graph.get_connections(user_id, "picture?height=9000&redirect=false")
+        picture_id = p["data"]["url"].split("_")[1]
+        friends = graph.get_connections(picture_id, "likes?fields=link,name&limit=5000")
         number = 0
+        print(friends)
         for i in range(0, len(friends["data"])):
             number += 1
             nodeid = friends["data"][i]["id"]
@@ -45,9 +48,11 @@ def login(session, email, password, array):
             check = (username[:7])
             if (check == "profile"):
                 continue
-            pic = graph.get_connections(nodeid, "picture?height=9000&redirect=false")
-            new = Girl(id=number, name=nodename, photo_url=pic["data"]["url"])
-            array.append(new)
+            if nodename.split(" ")[0][-1] == 'a':
+                pic = graph.get_connections(nodeid, "picture?height=9000&redirect=false")
+                new = Girl(id=number, name=nodename, photo_url=pic["data"]["url"])
+                array.append(new)
+                print(nodename)
         return True
 
 
