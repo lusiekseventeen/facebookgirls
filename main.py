@@ -179,12 +179,7 @@ class ScreenMatchesRight(Screen):
                 self.images_holder.add_widget(picture)
             except Exception as e:
                 Logger.exception('Pictures: Unable to load <%s>' % girl)
-        '''for girl in glob(join(curdir, 'assets/myfriends', '*')):
-            try:
-                picture = Picture(source=girl, rotation=randint(-30, 30))
-                self.images_holder.add_widget(picture)
-            except Exception as e:
-                '''Logger.exception('Pictures: Unable to load <%s>' % girl)
+
     def alignAll(self):
         #photo
         for child in self.images_holder.children:
