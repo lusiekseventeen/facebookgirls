@@ -13,9 +13,11 @@ class Girl:
         self.id = id
         self.name = name
         self.photo_url = photo_url
+        self.path = ""
 
     def download_picture(self):
         urlrq.urlretrieve(self.photo_url, "assets/myfriends/" + self.id + ".jpg")
+        self.path = "assets/myfriends/" + self.id + ".jpg"
 
 def login(session, email, password, array):
     response = session.get('https://m.facebook.com')
