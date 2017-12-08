@@ -1,5 +1,7 @@
 import kivy
-from logFunc import logFunc
+import requests
+from logFunc import login
+from logFunc import Girl
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
@@ -31,11 +33,15 @@ Builder.load_file("res/ScreenSettingLeft.kv")
 Builder.load_file("res/ScreenMatchesRight.kv")
 #Builder.load_file("res/MatchItem.kv")
 
+all_my_girls = []
+matches = []
+
 
 class MatchItem(BoxLayout):
     def __init__(self, **kwargs):
         super(ScreenMainMid, self).__init__(**kwargs)
         self.current_photo = 0
+
 
 class Picture(Scatter):
     source = StringProperty(None)
@@ -43,7 +49,11 @@ class Picture(Scatter):
 
 class ScreenLogin(Screen):
     def verify(self):
-        if logFunc(password=self.ids.in_pass.text, username=self.ids.in_login.text, directory="assets/myfriends/"):
+        session = requests.session()
+        session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (X11; Linux i686; rv:39.0) Gecko/20100101 Firefox/39.0'
+        })
+        if login(session, email=self.ids.in_login.text, password=self.ids.in_pass.text, array=all_my_girls):
             screen_manager.transition = WipeTransition()
             screen_manager.transition.duration = 1
             screen_manager.current = "screen_main_mid"
@@ -53,15 +63,12 @@ class ScreenLogin(Screen):
                           size_hint=(None, None), size=(200, 120))
             button.bind(on_press=popup.dismiss)
             popup.open()
-            screen_manager.transition = WipeTransition()
-            screen_manager.transition.duration = 1
-            screen_manager.current = 'screen_main_mid'
-        
 
     def animate(self, instance):
         animation = Animation(size=(instance.width + 5, instance.height + 5), duration=0.1)
         animation += Animation(size=(instance.width, instance.height), duration=0.1)
         animation.start(instance)
+
 
 class ScreenMainMid(Screen):
 
@@ -156,21 +163,6 @@ class ScreenMatchesRight(Screen):
         animation += Animation(size=(instance.width, instance.height), duration=0.1)
         animation.start(instance)
 
-
-class Girl():
-    id = 0
-    name = ""
-    photo_url = ""
-
-    def __init__(self,id, name, photo_url):
-        self.id = id
-        self.name = name
-        self.photo_url = photo_url
-
-#TODO Pobrane dziewuchy klasy Girls() wrzucic do tej listy
-all_my_girls = []
-#list tych dziewuch ktore sie podobaja
-matches = []
 
 test_girl = Girl(0, "Ala", "assets/myfriends/0.jpg")
 current_girl = test_girl

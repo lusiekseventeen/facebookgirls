@@ -17,11 +17,10 @@
             size: 50,50
             pos: 0, root.height-self.height
             on_press:
-                root.alignAll()
-                #root.manager.transition = SlideTransition()
-                #root.manager.transition.direction = 'right'
-                #root.manager.transition.duration = .5
-                #root.manager.current = 'screen_main_mid'
+                root.manager.transition = SlideTransition()
+                root.manager.transition.direction = 'right'
+                root.manager.transition.duration = .5
+                root.manager.current = 'screen_main_mid'
             Image:
                 source: 'assets/right.png'
                 pos: 0, root.height-self.height

@@ -1,25 +1,54 @@
 import facebook
-import requests
-import urllib
+from urllib.request import urlretrieve
 import os
+import requests
+import pyquery
 
-def logFunc(directory="", username="", password="",):
-    #Authentication
-    return True
-    graph = facebook.GraphAPI("EAAEifIzkwd0BAJC7JqatAbU4QPv5zmzAgN07RZBosi0UOoGDKagm3S6wVXZC3VcxdpZAEEsI3ujOza7Lvk1pIZCwcAtIlSwC7ZCRPEZATBUc8Cbfjxz9LR0Dh6iDMpaGZAiAOQVpXLCcCOlXKqZClQCrVxg3ySZCYPRblwiaZA9eTTvjErjY3doSuJDdho7XnDBLElJeoXgNtWXXI3znviSf0c")
-    likes = graph.get_connections("758466610899279", "likes?fields=link,name&limit=5000")
-    number = 0
-    for i in range(0, len(likes["data"])):
-        number += 1
-        nodeid = likes["data"][i]["id"]
-        nodename = likes["data"][i]["name"]
-        nodelink = likes["data"][i]["link"]
-        username = nodelink[25:]
-        check = (username[:7])
-        if (check == "profile"):
-            continue
-        if (os.path.exists(directory + nodename + ".jpg")):
-            continue
-        pic = graph.get_connections(username, "picture?height=9000&redirect=false")
-        urllib.request.urlretrieve(pic["data"]["url"], "directory" + number + ".jpg")
-    return True
+
+class Girl():
+    id = 0
+    name = ""
+    photo_url = ""
+
+    def __init__(self, id, name, photo_url):
+        self.id = id
+        self.name = name
+        self.photo_url = photo_url
+
+
+def login(session, email, password, array):
+    response = session.get('https://m.facebook.com')
+    response = session.post('https://m.facebook.com/login.php', data={
+        'email': email,
+        'pass': password
+    }, allow_redirects=False)
+    if 'c_user' not in response.cookies:
+        return False
+    else:
+        homepage_resp = session.get('https://m.facebook.com/home.php')
+        dom = pyquery.PyQuery(homepage_resp.text.encode('utf8'))
+        fb_dtsg = dom('input[name="fb_dtsg"]').val()
+        user_id = response.cookies['c_user']
+        xs = response.cookies['xs']
+        payload = {'grant_type': 'client_credentials', 'client_id': "2030671310550069", 'client_secret': "a497dfc6e769365ab08b93999c3ed76e"}
+        file = requests.post('https://graph.facebook.com/oauth/access_token?', params=payload)
+        token = file.json()['access_token']
+        graph = facebook.GraphAPI(token)
+        friends = graph.get_connections(user_id, "friends")
+        number = 0
+        for i in range(0, len(friends["data"])):
+            number += 1
+            nodeid = friends["data"][i]["id"]
+            nodename = friends["data"][i]["name"]
+            nodelink = friends["data"][i]["link"]
+            username = nodelink[25:]
+            check = (username[:7])
+            if (check == "profile"):
+                continue
+            pic = graph.get_connections(nodeid, "picture?height=9000&redirect=false")
+            new = Girl(id=number, name=nodename, photo_url=pic["data"]["url"])
+            array.append(new)
+        return True
+
+
+
