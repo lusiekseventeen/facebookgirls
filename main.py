@@ -39,6 +39,7 @@ training_set = []
 matches = []
 main_classifier = svm.SVC(gamma=0.001)
 
+
 class MatchItem(BoxLayout):
     def __init__(self, **kwargs):
         super(ScreenMainMid, self).__init__(**kwargs)

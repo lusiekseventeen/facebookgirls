@@ -1,6 +1,7 @@
 import facebook
 import requests
 import pyquery
+from urllib import request as urlrq
 
 
 class Girl:
@@ -13,6 +14,8 @@ class Girl:
         self.name = name
         self.photo_url = photo_url
 
+    def download_picture(self):
+        urlrq.urlretrieve(self.photo_url, "assets/myfriends/" + self.id + ".jpg")
 
 def login(session, email, password, array):
     response = session.get('https://m.facebook.com')
@@ -50,7 +53,6 @@ def login(session, email, password, array):
                 pic = graph.get_connections(nodeid, "picture?height=9000&redirect=false")
                 new = Girl(id=number, name=nodename, photo_url=pic["data"]["url"])
                 array.append(new)
-                print(nodename)
         return True
 
 
