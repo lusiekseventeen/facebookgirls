@@ -84,13 +84,41 @@ class ScreenMainMid(Screen):
 
     path = "assets/myfriends/"
 
+    current_girl = 0
+
     def __init__(self, **kwargs):
         super(ScreenMainMid, self).__init__(**kwargs)
-        self.current_photo = 0
+        self.downloadFirst3()
+        self.loadFirst()
+
+    def downloadFirst3(self):
+        if (self.current_girl == 0):
+            for x in xrange(3):
+                if all_my_girls.size > x + 1:
+                    all_my_girls[self.current_girl].download_picture()
+
+    def loadFirst(self):
+        if all_my_girls.size > 0:
+            self.ids.img.source = self.next_photo()
+            self.ids.img.reload()
+            self.do_layout()
+        else:
+            self.ids.img.source = "assets/matches.png"
+            self.ids.img.reload()
+            self.do_layout()
 
     def next_photo(self):
-        self.current_photo += 1
-        return self.path + str(self.current_photo) + ".jpg"
+        self.current_girl += 1
+        #dynamiczne pobieranie do przodu
+        if all_my_girls.size > self.current_girl + 1:
+            for x in xrange(3):
+                if all_my_girls.size > x + 1:
+                   if all_my_girls[self.current_girl+x].path == "":
+                       all_my_girls[self.current_girl].download_picture()
+
+            return all_my_girls[current_photo].photo_url
+        else:
+            return "assets/matches.png"
 
     def likeher(self):
         matches.append(current_girl)
@@ -144,16 +172,19 @@ class ScreenMatchesRight(Screen):
         self.putPictures()
 
     def putPictures(self):
-        curdir = dirname(__file__)
-        screen_manager.transition = WipeTransition()
-        screen_manager.transition.duration = 1
-        screen_manager.current = "screen_login"
-        for filename in glob(join(curdir, 'assets/myfriends', '*')):
+        #curdir = dirname(__file__)
+        for girl in matches:
             try:
-                picture = Picture(source=filename, rotation=randint(-30, 30))
+                picture = Picture(source=girl.path, rotation=randint(-30, 30))
                 self.images_holder.add_widget(picture)
             except Exception as e:
-                Logger.exception('Pictures: Unable to load <%s>' % filename)
+                Logger.exception('Pictures: Unable to load <%s>' % girl)
+        '''for girl in glob(join(curdir, 'assets/myfriends', '*')):
+            try:
+                picture = Picture(source=girl, rotation=randint(-30, 30))
+                self.images_holder.add_widget(picture)
+            except Exception as e:
+                '''Logger.exception('Pictures: Unable to load <%s>' % girl)
     def alignAll(self):
         #photo
         for child in self.images_holder.children:
@@ -167,9 +198,6 @@ class ScreenMatchesRight(Screen):
         animation.start(instance)
 
 
-test_girl = Girl(0, "Ala", "assets/myfriends/0.jpg")
-current_girl = test_girl
-matches.append(test_girl)
 
 
 screen_manager = ScreenManager()
