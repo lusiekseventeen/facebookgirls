@@ -116,7 +116,7 @@ class ScreenMainMid(Screen):
                    if all_my_girls[self.current_girl+x].path == "":
                        all_my_girls[self.current_girl].download_picture()
 
-            return all_my_girls[current_photo].photo_url
+            return all_my_girls[self.current_girl].photo_url
         else:
             return "assets/matches.png"
 
@@ -168,7 +168,6 @@ class ScreenMatchesRight(Screen):
 
     def __init__(self, **kwargs):
         super(ScreenMatchesRight, self).__init__(**kwargs)
-        self.current_photo = 0
         self.putPictures()
 
     def putPictures(self):
