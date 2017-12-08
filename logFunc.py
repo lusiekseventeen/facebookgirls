@@ -1,11 +1,9 @@
 import facebook
-from urllib.request import urlretrieve
-import os
 import requests
 import pyquery
 
 
-class Girl():
+class Girl:
     id = 0
     name = ""
     photo_url = ""

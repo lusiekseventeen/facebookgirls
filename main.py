@@ -23,6 +23,7 @@ from kivy.properties import StringProperty
 from kivy.core.text import LabelBase
 from kivy.animation import Animation
 from kivy.properties import ObjectProperty
+from sklearn import svm
 
 
 kivy.require('1.9.1')
@@ -34,8 +35,9 @@ Builder.load_file("res/ScreenMatchesRight.kv")
 #Builder.load_file("res/MatchItem.kv")
 
 all_my_girls = []
+training_set = []
 matches = []
-
+main_classifier = svm.SVC(gamma=0.001)
 
 class MatchItem(BoxLayout):
     def __init__(self, **kwargs):
