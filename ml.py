@@ -2,9 +2,9 @@ import sklearn
 import pandas
 
 
-def train(classificator, image, ok):
+def train(classificator, girl, ok):
     return
 
 
-def get_prediction(classificator, image):
+def get_prediction(classificator, girl):
     return False
