@@ -88,17 +88,23 @@ class ScreenMainMid(Screen):
 
     def __init__(self, **kwargs):
         super(ScreenMainMid, self).__init__(**kwargs)
-        self.downloadFirst3()
+        #self.downloadFirst3()
         self.loadFirst()
+
+    def no(self):
+        self.loadPicture()
+
+    def yes(self):
+        self.loadPicture()
 
     def downloadFirst3(self):
         if (self.current_girl == 0):
             for x in xrange(3):
-                if all_my_girls.size > x + 1:
+                if len(all_my_girls) > x + 1:
                     all_my_girls[self.current_girl].download_picture()
 
     def loadFirst(self):
-        if all_my_girls.size > 0:
+        if len(all_my_girls) > 0:
             self.ids.img.source = self.next_photo()
             self.ids.img.reload()
             self.do_layout()
@@ -110,20 +116,15 @@ class ScreenMainMid(Screen):
     def next_photo(self):
         self.current_girl += 1
         #dynamiczne pobieranie do przodu
-        if all_my_girls.size > self.current_girl + 1:
+        if len(all_my_girls) > self.current_girl + 1:
             for x in xrange(3):
-                if all_my_girls.size > x + 1:
+                if len(all_my_girls) > x + 1:
                    if all_my_girls[self.current_girl+x].path == "":
                        all_my_girls[self.current_girl].download_picture()
 
             return all_my_girls[self.current_girl].photo_url
         else:
             return "assets/matches.png"
-
-    def likeher(self):
-        matches.append(current_girl)
-        #nextGirl()
-        self.loadPicture()
 
     def loadPicture(self):
         self.ids.img.source = self.next_photo()
