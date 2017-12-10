@@ -5,6 +5,7 @@ from logFunc import Girl
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.app import App
 from kivy.lang import Builder
@@ -34,6 +35,9 @@ Builder.load_file("res/ScreenSettingLeft.kv")
 Builder.load_file("res/ScreenMatchesRight.kv")
 #Builder.load_file("res/MatchItem.kv")
 
+#Czcionka
+LabelBase.register(name="klavika", fn_regular="assets/fonts/klavika.otf")
+
 all_my_girls = []
 training_set = []
 matches = []
@@ -51,15 +55,20 @@ class Picture(Scatter):
 
 
 class ScreenLogin(Screen):
+
+    label1 = Label(text="we're getting your girls", font_name="klavika")
+    label2 = Label(text="almost done", font_name="klavika")
+    label3 = Label(text="yup! we've got them!", font_name="klavika")
+    popup = Popup(title='please wait...', content=label1, size_hint=(None, None), size=(400, 400))
+    animation = Animation(color=(1,1,1,1), duration=1)
+
     def verify(self):
         session = requests.session()
         session.headers.update({
             'User-Agent': 'Mozilla/5.0 (X11; Linux i686; rv:39.0) Gecko/20100101 Firefox/39.0'
         })
         if login(session, email=self.ids.in_login.text, password=self.ids.in_pass.text, array=all_my_girls):
-            screen_manager.transition = WipeTransition()
-            screen_manager.transition.duration = 1
-            screen_manager.current = "screen_main_mid"
+            self.navToMainMid()
         else:
             button = Button(text='Try again!', size=(175, 50), size_hint=(None, None), pos_hint={"center_y": .5})
             popup = Popup(title='Authentication failed!', content=button,
@@ -71,6 +80,26 @@ class ScreenLogin(Screen):
         animation = Animation(size=(instance.width + 5, instance.height + 5), duration=0.1)
         animation += Animation(size=(instance.width, instance.height), duration=0.1)
         animation.start(instance)
+
+    def animateWaitScreen(self, l1):
+        for x in range(20):
+            self.animation += Animation(color=(1, 1, 1, .2), duration=1, t="in_back")
+            self.animation += Animation(color=(1, 1, 1, 1), duration=1, t="in_back")
+        self.animation.start(l1)
+
+
+    def waitScreenStart(self):
+        self.popup.open()
+        self.animateWaitScreen(self.label1)
+
+    def waitScreenStop(self):
+        self.popup.dismiss()
+        self.animation.cancel(self.label1)
+
+    def navToMainMid(self):
+        screen_manager.transition = WipeTransition()
+        screen_manager.transition.duration = 1
+        screen_manager.current = "screen_main_mid"
 
 
 class ScreenMainMid(Screen):
@@ -203,8 +232,6 @@ screen_manager.add_widget(ScreenMainMid(name="screen_main_mid"))
 screen_manager.add_widget(ScreenSettingLeft(name="screen_setting_left"))
 screen_manager.add_widget(ScreenMatchesRight(name="screen_matches_right"))
 
-#Czcionka
-LabelBase.register(name="klavika", fn_regular="assets/fonts/klavika.otf")
 
 
 class FacebookGirlsApp(App):
