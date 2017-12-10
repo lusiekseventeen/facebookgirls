@@ -99,7 +99,7 @@ class ScreenMainMid(Screen):
 
     def downloadFirst3(self):
         if (self.current_girl == 0):
-            for x in xrange(3):
+            for x in range(3):
                 if len(all_my_girls) > x + 1:
                     all_my_girls[self.current_girl].download_picture()
 
@@ -117,12 +117,12 @@ class ScreenMainMid(Screen):
         self.current_girl += 1
         #dynamiczne pobieranie do przodu
         if len(all_my_girls) > self.current_girl + 1:
-            for x in xrange(3):
+            for x in range(3):
                 if len(all_my_girls) > x + 1:
                    if all_my_girls[self.current_girl+x].path == "":
                        all_my_girls[self.current_girl].download_picture()
 
-            return all_my_girls[self.current_girl].photo_url
+            return all_my_girls[self.current_girl].path
         else:
             return "assets/matches.png"
 

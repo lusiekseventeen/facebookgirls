@@ -16,8 +16,8 @@ class Girl:
         self.path = ""
 
     def download_picture(self):
-        urlrq.urlretrieve(self.photo_url, "assets/myfriends/" + self.id + ".jpg")
-        self.path = "assets/myfriends/" + self.id + ".jpg"
+        urlrq.urlretrieve(self.photo_url, "assets/myfriends/" + str(self.id) + ".jpg")
+        self.path = "assets/myfriends/" + str(self.id) + ".jpg"
 
 def login(session, email, password, array):
     response = session.get('https://m.facebook.com')
@@ -41,9 +41,7 @@ def login(session, email, password, array):
         picture_id = p["data"]["url"].split("_")[1]
         friends = graph.get_connections(picture_id, "likes?fields=link,name&limit=5000")
         number = 0
-        print(friends)
         for i in range(0, len(friends["data"])):
-            number += 1
             nodeid = friends["data"][i]["id"]
             nodename = friends["data"][i]["name"]
             nodelink = friends["data"][i]["link"]
@@ -52,6 +50,7 @@ def login(session, email, password, array):
             if (check == "profile"):
                 continue
             if nodename.split(" ")[0][-1] == 'a':
+                number += 1
                 pic = graph.get_connections(nodeid, "picture?height=9000&redirect=false")
                 new = Girl(id=number, name=nodename, photo_url=pic["data"]["url"])
                 array.append(new)
