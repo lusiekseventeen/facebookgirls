@@ -115,8 +115,11 @@ class ScreenLogin(Screen):
     popup = Popup(title='please wait...', content=label1, size_hint=(None, None), size=(400, 400))
     animation = Animation(color=(1,1,1,1), duration=1)
 
-    def verify(self):
+    def login(self):
         self.waitScreenStart()
+        self.verify()
+
+    def verify(self):
         session = requests.session()
         session.headers.update({
             'User-Agent': 'Mozilla/5.0 (X11; Linux i686; rv:39.0) Gecko/20100101 Firefox/39.0'
