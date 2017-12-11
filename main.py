@@ -116,7 +116,7 @@ class ScreenLogin(Screen):
     animation = Animation(color=(1,1,1,1), duration=1)
 
     def login(self):
-        self.waitScreenStart()
+        thread.start_new_thread(self.waitScreenStart())
         self.verify()
 
     def verify(self):
@@ -153,6 +153,7 @@ class ScreenLogin(Screen):
     def waitScreenStop(self):
         self.popup.dismiss()
         self.animation.cancel(self.label1)
+
 
     def navToMainMid(self):
         screen_manager.transition = WipeTransition()
