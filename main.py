@@ -172,13 +172,15 @@ class ScreenMainMid(Screen):
         self.path = "assets/myfriends/"
         self.current_girl = 0
         #self.downloadFirst3()
-        if(screen_manager.current == "screen_main_mid")
+        if(screen_manager.current == "screen_main_mid"):
             self.loadFirst()
 
     def no(self):
+        copyfile(all_my_girls[self.current_girl].path, "assets/myfriends/hate")
         self.loadPicture()
 
     def yes(self):
+        copyfile(all_my_girls[self.current_girl].path, "assets/myfriends/love")
         self.loadPicture()
 
     def downloadFirst3(self):
@@ -195,15 +197,15 @@ class ScreenMainMid(Screen):
     def next_photo(self):
         self.current_girl += 1
         #dynamiczne pobieranie do przodu
-        #if len(all_my_girls) > self.current_girl + 1:
+        if len(all_my_girls) > self.current_girl + 1:
             #for x in range(3):
                 #if len(all_my_girls) > x + 1:
                    #if all_my_girls[self.current_girl+x].path == "":
                        #all_my_girls[self.current_girl].download_picture()
 
-        return all_my_girls[self.current_girl].path
-        #else:
-            #return "assets/matches.png"
+            return all_my_girls[self.current_girl].path
+        else:
+            return "assets/matches.png"
 
     def loadPicture(self):
         self.ids.img.source = self.next_photo()
