@@ -187,27 +187,22 @@ class ScreenMainMid(Screen):
                     all_my_girls[self.current_girl].download_picture()
 
     def loadFirst(self):
-        if len(all_my_girls) > 0:
-            self.ids.img.source = self.next_photo()
-            self.ids.img.reload()
-            self.do_layout()
-        else:
-            self.ids.img.source = "assets/matches.png"
-            self.ids.img.reload()
-            self.do_layout()
+        for x in range(len(all_my_girls)):
+            all_my_girls[x].download_picture()
+        self.ids.img.source = "assets/myfriends/1.jpg"
 
     def next_photo(self):
         self.current_girl += 1
         #dynamiczne pobieranie do przodu
-        if len(all_my_girls) > self.current_girl + 1:
-            for x in range(3):
-                if len(all_my_girls) > x + 1:
-                   if all_my_girls[self.current_girl+x].path == "":
-                       all_my_girls[self.current_girl].download_picture()
+        #if len(all_my_girls) > self.current_girl + 1:
+            #for x in range(3):
+                #if len(all_my_girls) > x + 1:
+                   #if all_my_girls[self.current_girl+x].path == "":
+                       #all_my_girls[self.current_girl].download_picture()
 
-            return all_my_girls[self.current_girl].path
-        else:
-            return "assets/matches.png"
+        return all_my_girls[self.current_girl].path
+        #else:
+            #return "assets/matches.png"
 
     def loadPicture(self):
         self.ids.img.source = self.next_photo()
@@ -256,12 +251,13 @@ class ScreenMatchesRight(Screen):
 
     def putPictures(self):
         #curdir = dirname(__file__)
-        for girl in matches:
+        for filename in glob(join(curdir, 'assets/myfriends/training/love', '*')):
             try:
-                picture = Picture(source=girl.path, rotation=randint(-30, 30))
+                picture = Picture(source=filename, rotation=randint(-30, 30))
+                self.add_widget(picture)
                 self.images_holder.add_widget(picture)
             except Exception as e:
-                Logger.exception('Pictures: Unable to load <%s>' % girl)
+                Logger.exception('Pictures: Unable to load <%s>' % filename)
 
     def alignAll(self):
         #photo
