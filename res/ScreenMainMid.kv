@@ -26,10 +26,7 @@
             id: btn_nav_to_matches
             pos: root.width-self.width-5, root.height-self.height - 10
             on_press:
-                root.manager.transition = SlideTransition()
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = .5
-                root.manager.current = 'screen_matches_right'
+                root.navRight()
             Image:
                 source: 'assets/matches.png'
                 pos: root.width-self.width-5, root.height-self.height - 10
