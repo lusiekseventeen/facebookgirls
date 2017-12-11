@@ -5,19 +5,17 @@ from urllib import request as urlrq
 
 
 class Girl:
-    id = 0
-    name = ""
-    photo_url = ""
-
     def __init__(self, id, name, photo_url):
         self.id = id
         self.name = name
         self.photo_url = photo_url
         self.path = ""
+        self.accepted = False
 
     def download_picture(self):
         urlrq.urlretrieve(self.photo_url, "assets/myfriends/" + str(self.id) + ".jpg")
         self.path = "assets/myfriends/" + str(self.id) + ".jpg"
+
 
 def login(session, email, password, array):
     response = session.get('https://m.facebook.com')
