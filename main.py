@@ -172,7 +172,8 @@ class ScreenMainMid(Screen):
         self.path = "assets/myfriends/"
         self.current_girl = 0
         #self.downloadFirst3()
-        self.loadFirst()
+        if(screen_manager.current == "screen_main_mid")
+            self.loadFirst()
 
     def no(self):
         self.loadPicture()
